@@ -1,0 +1,1 @@
+gcc fizzbuzz.s -c -o fizzbuzz.o && ld -e main fizzbuzz.o && ./a.out
