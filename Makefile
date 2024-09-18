@@ -1,6 +1,7 @@
 NAME = libasm.a
 
-SRCS = ft_strlen.s
+SRCS = ft_strlen.s \
+			ft_strcpy.s
 
 OBJS = $(SRCS:.s=.o)
 
@@ -34,4 +35,7 @@ re: fclean all
 test: all
 	$(CC) $(CFLAGS) $(NAME) main.c && ./a.out
 
-.PHONY: all clean fclean re
+dump:
+	objdump -D a.out
+
+.PHONY: all clean fclean re dump
