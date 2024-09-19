@@ -4,12 +4,15 @@
 #include <stdbool.h>
 #include <unistd.h>
 #include <fcntl.h>
+#include <string.h>
+#include <stdlib.h>
 
 size_t ft_strlen(const char *s);
 char *ft_strcpy(char *dst, const char *src);
 int ft_strcmp(const char* s1, const char *s2);
 ssize_t ft_write(int fildes, const void *buf, size_t nbyte);
 ssize_t ft_read(int fildes, const void *buf, size_t nbyte);
+char *ft_strdup(const char *s1);
 
 bool test_strlen(void) {
   const char *s = "hello world";
@@ -114,7 +117,28 @@ void test_read(void) {
   printf("ft_res : %d, buf: %s\n", ft_res, ft_buf);
 }
 
+void test_strdup(void) {
+  const char *s = "hello world";
+
+  {
+    char *std_buf = strdup(s);
+    char *ft_buf = ft_strdup(s);
+    printf("std_buf: %s\n", std_buf);
+    printf("ft_buf : %s\n", ft_buf);
+    free(std_buf);
+    free(ft_buf);
+
+  }
+  {
+    char *std_buf = strdup("hello world");
+    char *ft_buf = ft_strdup(s);
+    printf("std_buf: %s\n", std_buf);
+    printf("ft_buf : %s\n", ft_buf);
+    free(std_buf);
+    free(ft_buf);
+  }
+}
 
 int main(void) {
-  test_read();
+  test_strdup();
 }

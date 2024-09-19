@@ -13,6 +13,6 @@ _ft_write:
 .error:
 	mov r8, rax
 	call ___error ; Call ___error to set the address of errno in rax
-	mov [rax], r8 ;  Restore the error code in rax
+	mov [rax], r8 ; Restore the error code in rax
 	mov rax, -1
 	ret
