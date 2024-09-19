@@ -1,10 +1,13 @@
+#include <errno.h>
 #include <string.h>
 #include <stdio.h>
 #include <stdbool.h>
+#include <unistd.h>
 
 size_t ft_strlen(const char *s);
 char *ft_strcpy(char *dst, const char *src);
 int ft_strcmp(const char* s1, const char *s2);
+ssize_t ft_write(int fildes, const void *buf, size_t nbyte);
 
 bool test_strlen(void) {
   const char *s = "hello world";
@@ -49,7 +52,34 @@ bool test_strcmp(void) {
   return std_res1 == ft_res1 && std_res2 == ft_res2 && std_res3 == ft_res3;
 }
 
+bool test_write(void) {
+  const char *s1 = "hello";
+  const char *s2 = "world";
+
+  const ssize_t std_res1 = write(1, s1, strlen(s1));
+  const ssize_t std_res2 = write(2, s2, strlen(s2));
+  const ssize_t std_res3 = write(1, "\n", 1);
+
+  const ssize_t ft_res1 = ft_write(1, s1, strlen(s1));
+  const ssize_t ft_res2 = ft_write(2, s2, strlen(s2));
+  const ssize_t ft_res3 = ft_write(1, "\n", 1);
+
+  // error case
+  printf("1. errno: %d\n", errno);
+  const ssize_t std_res4 = write(4242, s1, strlen(s1));
+  printf("2. errno: %d\n", errno);
+  errno = 0;
+  printf("3. errno: %d\n", errno);
+  const ssize_t ft_res4 = ft_write(4242, s1, strlen(s1));
+  printf("4. errno: %d\n", errno);
+
+  printf("std_res1: %zd, std_res2: %zd, std_res3: %zd, std_res4: %zd\n", std_res1, std_res2, std_res3, std_res4);
+  printf("ft_res1: %zd, ft_res2: %zd, ft_res3: %zd, ft_res4: %zd\n", ft_res1, ft_res2, ft_res3, ft_res4);
+
+  return true;
+}
+
+
 int main(void) {
-  const int res = test_strcmp();
-  printf("-------------\n result: %d\n", res);
+  test_write();
 }
