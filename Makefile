@@ -1,7 +1,8 @@
 NAME = libasm.a
 
 SRCS = ft_strlen.s \
-			ft_strcpy.s
+			ft_strcpy.s \
+			ft_strcmp.s
 
 OBJS = $(SRCS:.s=.o)
 
@@ -22,7 +23,7 @@ $(NAME): $(OBJS)
 	ar rc $(NAME) $(OBJS)
 
 %.o: %.s
-	@$(NASM) $(NASMFLAGS) $< -o $@
+	$(NASM) $(NASMFLAGS) $< -o $@
 
 clean:
 	rm -f $(OBJS)
@@ -32,10 +33,14 @@ fclean: clean
 
 re: fclean all
 
-test: all
+test:
 	$(CC) $(CFLAGS) $(NAME) main.c && ./a.out
 
 dump:
 	objdump -D a.out
 
-.PHONY: all clean fclean re dump
+debug: CFLAGS += -g -fsanitize=address
+debug: re
+	$(CC) $(CFLAGS) $(NAME) main.c && ./a.out
+
+.PHONY: all clean fclean re dump debug

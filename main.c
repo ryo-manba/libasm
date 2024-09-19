@@ -4,6 +4,7 @@
 
 size_t ft_strlen(const char *s);
 char *ft_strcpy(char *dst, const char *src);
+int ft_strcmp(const char* s1, const char *s2);
 
 bool test_strlen(void) {
   const char *s = "hello world";
@@ -29,6 +30,26 @@ bool test_strcpy(void) {
   return strcmp(std_res, ft_res) == 0 && strcmp(std_buf, ft_buf) == 0;
 }
 
+bool test_strcmp(void) {
+  const char *s1 = "hello world";
+  const char *s2 = "hello world";
+  const char *s3 = "HELLO WORLD";
+
+  const int std_res1 = strcmp(s1, s2);
+  const int std_res2 = strcmp(s1, s3);
+  const int std_res3 = strcmp(s3, s1);
+
+  const int ft_res1 = ft_strcmp(s1, s2);
+  const int ft_res2 = ft_strcmp(s1, s3);
+  const int ft_res3 = ft_strcmp(s3, s1);
+
+  printf("std_res1: %d, std_res2: %d, std_res3: %d\n", std_res1, std_res2, std_res3);
+  printf("ft_res1: %d, ft_res2: %d, ft_res3: %d\n", ft_res1, ft_res2, ft_res3);
+
+  return std_res1 == ft_res1 && std_res2 == ft_res2 && std_res3 == ft_res3;
+}
+
 int main(void) {
-  test_strcpy();
+  const int res = test_strcmp();
+  printf("-------------\n result: %d\n", res);
 }

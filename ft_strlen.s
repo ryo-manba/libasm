@@ -1,6 +1,6 @@
 ; size_t ft_strlen(const char* s)
-section .text
   global _ft_strlen
+  section .text
 
 ; rdi = s, rcx = counter, rax = retval
 _ft_strlen:
