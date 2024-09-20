@@ -14,47 +14,64 @@ ssize_t ft_write(int fildes, const void *buf, size_t nbyte);
 ssize_t ft_read(int fildes, const void *buf, size_t nbyte);
 char *ft_strdup(const char *s1);
 
-bool test_strlen(void) {
-  const char *s = "hello world";
-
-  const size_t expected = strlen(s);
-  const size_t actual = ft_strlen(s);
-
-  printf("s: %s, expected: %zu, actual: %zu\n", s, expected, actual);
-  return expected == actual;
+void check(const bool f) {
+  const char *msg = f? "[PASS]" : "[FAIL]";
+  printf("%s\n", msg);
 }
 
-bool test_strcpy(void) {
-  char std_buf[10];
-  char ft_buf[10];
-  const char *src = "123456789";
+bool run_strlen(const char *s) {
+  return strlen(s) == ft_strlen(s);
+}
 
-  const char *std_res = strcpy(std_buf, src);
-  const char *ft_res = ft_strcpy(ft_buf, src);
+void test_strlen(void) {
+  puts("--- [ft_strlen] ---");
+  check(run_strlen(""));
+  check(run_strlen("a"));
+  check(run_strlen("Hello, World!"));
+  check(run_strlen("あいうえお"));
+  check(run_strlen("42東京"));
+  check(run_strlen("01234567890"));
+  check(run_strlen("Lorem ipsum dolor sit amet, consectetur adipiscing elit."));
+}
 
-  printf("std_res: %s, ft_res: %s\n", std_res, ft_res);
-  printf("src: %s, expected: %s, actual: %s\n", src, std_buf, ft_buf);
+bool run_strcpy(const char *s) {
+  char std_buf[1024];
+  char ft_buf[1024];
 
+  const char *std_res = strcpy(std_buf, s);
+  const char *ft_res = ft_strcpy(ft_buf, s);
   return strcmp(std_res, ft_res) == 0 && strcmp(std_buf, ft_buf) == 0;
 }
 
-bool test_strcmp(void) {
-  const char *s1 = "hello world";
-  const char *s2 = "hello world";
-  const char *s3 = "HELLO WORLD";
+void test_strcpy(void) {
+  puts("--- [ft_strcpy] ---");
+  check(run_strcpy(""));
+  check(run_strcpy("a"));
+  check(run_strcpy("Hello, World!"));
+  check(run_strcpy("あいうえお"));
+  check(run_strcpy("42東京"));
+  check(run_strcpy("01234567890"));
+  check(run_strcpy("Lorem ipsum dolor sit amet, consectetur adipiscing elit."));
+}
 
-  const int std_res1 = strcmp(s1, s2);
-  const int std_res2 = strcmp(s1, s3);
-  const int std_res3 = strcmp(s3, s1);
+bool run_strcmp(const char *s1, const char *s2) {
+  const int std_res = strcmp(s1, s2);
+  const int ft_res = ft_strcmp(s1, s2);
+  return std_res == ft_res;
+}
 
-  const int ft_res1 = ft_strcmp(s1, s2);
-  const int ft_res2 = ft_strcmp(s1, s3);
-  const int ft_res3 = ft_strcmp(s3, s1);
-
-  printf("std_res1: %d, std_res2: %d, std_res3: %d\n", std_res1, std_res2, std_res3);
-  printf("ft_res1: %d, ft_res2: %d, ft_res3: %d\n", ft_res1, ft_res2, ft_res3);
-
-  return std_res1 == ft_res1 && std_res2 == ft_res2 && std_res3 == ft_res3;
+void test_strcmp(void) {
+  puts("--- [ft_strcmp] ---");
+  check(run_strcmp("Hello World", "Hello World"));
+  check(run_strcmp("Hello World", "Hello Worl"));
+  check(run_strcmp("Hello Worl", "Hello World"));
+  check(run_strcmp("hello world", "Hello World"));
+  check(run_strcmp("", ""));
+  check(run_strcmp("a", ""));
+  check(run_strcmp("", "a"));
+  check(run_strcmp("あいうえお", "あいうえお"));
+  check(run_strcmp("あいうえお", "あいうえ"));
+  check(run_strcmp("あいうえ", "あいうえお"));
 }
 
 void test_write(void) {
@@ -140,5 +157,7 @@ void test_strdup(void) {
 }
 
 int main(void) {
-  test_strdup();
+  test_strlen();
+  test_strcpy();
+  test_strcmp();
 }
