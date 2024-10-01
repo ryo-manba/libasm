@@ -5,7 +5,7 @@
 
 ; rdi = fildes, rsi = buf, rdx = nbyte
 ft_read:
-  mov     rax, 0 ; read syscall number is zero
+  mov rax, 0 ; read syscall number is zero
   syscall
   cmp rax, 0
   jl .error
