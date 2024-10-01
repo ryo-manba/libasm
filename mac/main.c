@@ -180,7 +180,6 @@ void test_strdup(void) {
     free(std_buf);
     free(ft_buf);
   }
-
 }
 
 int main(void) {
