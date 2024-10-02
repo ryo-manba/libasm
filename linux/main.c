@@ -157,7 +157,6 @@ void test_strdup(void) {
     print_result(strcmp(std_buf, ft_buf) == 0);
     free(std_buf);
     free(ft_buf);
-
   }
   {
     char *std_buf = strdup("hello world");
