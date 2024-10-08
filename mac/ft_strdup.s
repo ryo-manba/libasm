@@ -24,8 +24,8 @@ _ft_strdup:
   ret
 
 .malloc_failed:
-	mov r8, rax
-	call ___error ; Call ___error to set the address of errno in rax
-	mov [rax], r8 ; Restore the error code in rax
-	mov rax, 0
-	ret
+  mov r8, rax
+  call ___error ; Call ___error to set the address of errno in rax
+  mov [rax], r8 ; Restore the error code in rax
+  mov rax, 0
+  ret
